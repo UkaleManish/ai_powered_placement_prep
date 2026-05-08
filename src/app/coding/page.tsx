@@ -9,6 +9,8 @@ import { firebaseDb } from '@/lib/firebaseClient'
 
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false })
 
+type Language = 'python' | 'javascript' | 'cpp'
+
 type CodingQuestion = {
   id: string
   title: string
@@ -19,7 +21,7 @@ type CodingQuestion = {
   examples: { input: string; output: string; explanation: string }[]
   inputFormat?: string
   outputFormat?: string
-  starterCode: { python: string; javascript: string; cpp: string }
+  starterCode: Record<Language, string>
   testCases: { input: string; output: string }[]
 }
 
@@ -30,7 +32,7 @@ const difficultyColor: Record<string, string> = {
 export default function CodingPage() {
   const [questions, setQuestions] = useState<CodingQuestion[]>([])
   const [selected, setSelected] = useState<CodingQuestion | null>(null)
-  const [lang, setLang] = useState<'python' | 'javascript' | 'cpp'>('python')
+  const [lang, setLang] = useState<Language>('python')
   const [code, setCode] = useState<Record<string, Record<string, string>>>({})
   const [running, setRunning] = useState(false)
   const [results, setResults] = useState<any[]>([])
@@ -286,7 +288,7 @@ export default function CodingPage() {
             {/* Editor Toolbar */}
             <div style={{ padding: '10px 16px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(15,23,42,0.5)' }}>
               <div style={{ display: 'flex', gap: '6px' }}>
-                {(['python', 'javascript', 'cpp'] as const).map(l => {
+                {( ['python', 'javascript', 'cpp'] as Language[] ).map(l => {
                   const disabled = l !== 'python'
                   return (
                     <button key={l} onClick={() => !disabled && setLang(l)}
