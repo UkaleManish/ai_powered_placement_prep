@@ -30,7 +30,7 @@ const difficultyColor: Record<string, string> = {
 export default function CodingPage() {
   const [questions, setQuestions] = useState<CodingQuestion[]>([])
   const [selected, setSelected] = useState<CodingQuestion | null>(null)
-  const [lang, setLang] = useState<'python'>('python')
+  const [lang, setLang] = useState<'python' | 'javascript' | 'cpp'>('python')
   const [code, setCode] = useState<Record<string, Record<string, string>>>({})
   const [running, setRunning] = useState(false)
   const [results, setResults] = useState<any[]>([])
@@ -289,7 +289,7 @@ export default function CodingPage() {
                 {(['python', 'javascript', 'cpp'] as const).map(l => {
                   const disabled = l !== 'python'
                   return (
-                    <button key={l} onClick={() => !disabled && setLang('python')}
+                    <button key={l} onClick={() => !disabled && setLang(l)}
                       disabled={disabled}
                       style={{
                         padding: '6px 14px',
@@ -326,7 +326,7 @@ export default function CodingPage() {
             <div style={{ flex: 1, overflow: 'hidden' }}>
               <MonacoEditor
                 height="100%"
-                language={lang === 'cpp' ? 'cpp' : lang}
+                language={lang}
                 theme="vs-dark"
                 value={getCode()}
                 onChange={(val) => setCurrentCode(val || '')}
