@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 PlacePrep AI — Setup Guide
 
 ## ✅ Prerequisites
@@ -181,3 +182,6 @@ Key talking points:
 ---
 
 Built with ❤️ for placement preparation
+=======
+# ai_powered_placement_prep
+>>>>>>> 8589b3d58c3aca9f17339abe9398c57fb40baa9f
